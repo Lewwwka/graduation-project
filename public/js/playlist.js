@@ -12,7 +12,8 @@ function formatDuration(num) {
 }
 
 //Информация о плейлисте
-if (window.location.hash) {
+const getPlaylist = async () => {
+    await
   fetch(window.location.hash.slice(1), {
     headers: {
       "Content-Type": "application/json",
@@ -21,7 +22,7 @@ if (window.location.hash) {
   })
     .then((res) => {
       if (!res.ok) {
-        return Promise.reject(res.status);
+        throw new Error(res.statusText);
       } else {
         return res.json();
       }
@@ -33,9 +34,8 @@ if (window.location.hash) {
       description.textContent = data.description;
       image.setAttribute("src", data.images[0].url);
       name.textContent = data.name;
-      let count = 1;
       const tabel = document.querySelector(".main__table");
-      data.tracks.items.forEach((element) => {
+      data.tracks.items.forEach((element, index) => {
         //Новая строка
         const tr = document.createElement("tr");
         tr.classList.add("table__items");
@@ -44,8 +44,7 @@ if (window.location.hash) {
         const td = document.createElement("td");
         td.classList.add("table__item");
         td.classList.add("table__number");
-        td.textContent = count;
-        count++;
+        td.textContent = index + 1;
 
         //Описание
         const tdItem = document.createElement("td");
@@ -91,5 +90,11 @@ if (window.location.hash) {
         tr.appendChild(time);
         tabel.appendChild(tr);
       });
-    });
+    })
+    .catch(
+      () =>
+        (document.querySelector(".playlist__name").textContent =
+          "Ошибка подключения к серверу")
+    );
 }
+await getPlaylist();

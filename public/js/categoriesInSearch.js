@@ -9,7 +9,7 @@ fetch("https://api.spotify.com/v1/browse/categories", {
 })
   .then((res) => {
     if (!res.ok) {
-      return Promise.reject(res.status);
+      throw new Error(res.statusText);
     } else {
       return res.json();
     }
@@ -17,21 +17,35 @@ fetch("https://api.spotify.com/v1/browse/categories", {
   .then((data) => {
     data.categories.items.forEach((element) => {
       const sectionBlocks = document.querySelector(".section__blocks");
+
+      //Созданиее блока категории
       const block = document.createElement("div");
-      const photo = document.createElement("a");
-      const image = document.createElement("img");
-      const nameOfCat = document.createElement("h2");
       block.classList.add("section__block");
-      photo.classList.add("section__photo");
-      image.classList.add("photo");
-      nameOfCat.classList.add("section__nameOfAlbum");
-      image.src = element.icons[0].url;
       block.setAttribute("src", element.icons[0].url);
+
+      //Ссылка на категорию
+      const photo = document.createElement("a");
+      photo.classList.add("section__photo");
       photo.setAttribute("href", "category.html" + "#" + element.href);
+
+      //Картинка категории
+      const image = document.createElement("img");
+      image.classList.add("photo");
+      image.src = element.icons[0].url;
+
+      //Наименование категории
+      const nameOfCat = document.createElement("h2");
+      nameOfCat.classList.add("section__nameOfAlbum");
       nameOfCat.innerHTML = element.name;
-      photo.appendChild(image);
+
       block.appendChild(nameOfCat);
+      photo.appendChild(image);
       block.appendChild(photo);
       sectionBlocks.appendChild(block);
     });
-  });
+  })
+  .catch(
+    () =>
+      (document.querySelector(".section__head").textContent =
+        "Ошибка подключения к серверу")
+  );

@@ -1,6 +1,7 @@
 import { getToken } from "./token.js";
 //Рекомендации
-fetch("https://api.spotify.com/v1/browse/featured-playlists", {
+const getRecomend = async () => {
+  await fetch("https://api.spotify.com/v1/browse/featured-playlists", {
   headers: {
     "Content-Type": "application/json",
     Authorization: "Bearer " + (await getToken()),
@@ -8,7 +9,7 @@ fetch("https://api.spotify.com/v1/browse/featured-playlists", {
 })
   .then((res) => {
     if (!res.ok) {
-      return Promise.reject(res.status);
+      throw new Error(res.statusText);
     } else {
       return res.json();
     }
@@ -16,21 +17,37 @@ fetch("https://api.spotify.com/v1/browse/featured-playlists", {
   .then((data) => {
     data.playlists.items.forEach((element) => {
       const sectionBlocks = document.querySelector(".section__blocks");
+
+      //Созданиее рекомандованого блока
       const block = document.createElement("div");
-      const photo = document.createElement("a");
-      const image = document.createElement("img");
-      const nameOfCat = document.createElement("h2");
       block.classList.add("section__block");
-      photo.classList.add("section__photo");
-      image.classList.add("photo");
-      nameOfCat.classList.add("section__nameOfAlbum");
-      image.src = element.images[0].url;
       block.setAttribute("src", element.images[0].url);
+
+      //Ссылка на рекомендацию
+      const photo = document.createElement("a");
+      photo.classList.add("section__photo");
       photo.setAttribute("href", "playlist.html" + "#" + element.href);
+
+      //Картинка рекомендации
+      const image = document.createElement("img");
+      image.classList.add("photo");
+      image.src = element.images[0].url;
+
+      //Наименование рекомендации
+      const nameOfCat = document.createElement("h2");
+      nameOfCat.classList.add("section__nameOfAlbum");
       nameOfCat.innerHTML = element.name;
-      photo.appendChild(image);
+
       block.appendChild(nameOfCat);
+      photo.appendChild(image);
       block.appendChild(photo);
       sectionBlocks.appendChild(block);
     });
-  });
+  })
+  .catch(
+    () =>
+      (document.querySelector(".section__head").textContent =
+        "Ошибка подключения к серверу")
+  );
+  }
+  await getRecomend();
