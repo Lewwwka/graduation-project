@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/album.png" />
+    <link rel="icon" href="album.png" />
     <link rel="stylesheet" href="css/index.css">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
@@ -21,7 +21,7 @@
     -->
     <title>Clone Spotify</title>
     <script type="module" src="./js/onload.js"></script>
-    <script type="module" src="./js/recommendations.js"></script>
+    <script type="module" src="./js/categoriesInSearch.js"></script>
   </head>
 
   <body>
@@ -29,31 +29,33 @@
       <noscript>You need to enable JavaScript to run this app.</noscript>
       <header class="header">
         <div class="header__right">
-          <a href="" class="header__link login">
-              <img class="header__image">
-              <h3 class="header__username">Войти</h3>
+          <a href="#profile" class="header__link login">
+            <img class="header__image"> 
+            <h3 class="header__username">Войти</h3>
           </a>
-      </div>
+        </div>
       </header>
   
       <aside class="sidebar">
+  
         <a href="main" class="sidebar__link">
           <img class="sidebar__logo" src="Spotify_Logo.png">
         </a>
         <nav class="navigation">
-          <a class="nav-link active" href="index.html"><i class=" icon"></i>Главная</a>
-          <a class="nav-link" href="search.html"><i class="icon"></i>Категории</a>
+          <a class="nav-link" href="index.html"><i class=" icon"></i>Главная</a>
+          <a class="nav-link active" href="search.html"><i class="icon"></i>Категории</a>
         </nav>
   
       </aside>
       <main class="main" style="height: 100%;">
-        <h1 class="section__head recommendation">Рекомендации</h1>
+        <div class="hidden search__container">
+
+        </div>
+        <h1 class="section__head">Категории</h1>
         <section class="section last__section">
           <div class="section__blocks">
-           
           </div>
         </section>
-      
       </main>
   
       <footer class="footer">
@@ -73,7 +75,6 @@
           <p class="footer__volume"> Громкость </p>
         </div>
       </footer>
-      
   
     </div>
   </body>
