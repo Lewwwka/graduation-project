@@ -1,23 +1,20 @@
-import React from 'react';
+import { Routes, Route } from "react-router-dom";
+import Home from "./pages/Home/Home";
+import Categories from "./pages/Categories/Categories";
+import AboutCategory from "./pages/AboutCategory/AboutCategory";
+import AboutPlaylist from "./pages/Playlist/AboutPlaylist";
 
-// function App() {
-//   return (
-//     <div className="App">
-//       <header className="App-header">
-//         <p>
-//           Edit <code>src/App.tsx</code> and save to reload.
-//         </p>
-//         <a
-//           className="App-link"
-//           href="https://reactjs.org"
-//           target="_blank"
-//           rel="noopener noreferrer"
-//         >
-//           Learn React
-//         </a>
-//       </header>
-//     </div>
-//   );
-// }
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/callback" element={<Home />} />
+      <Route path="/playlist.html" element={<AboutPlaylist />} />
+      <Route path="/search.html" element={<Categories />} />
+      <Route path="/search.html/category.html" element={<AboutCategory />} />
+      <Route path="/search.html/category.html/playlist.html" element={<AboutPlaylist />} />
+    </Routes>
+  );
+}
 
-// export default App;
+export default App;
