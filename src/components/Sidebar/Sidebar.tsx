@@ -9,7 +9,7 @@ function Sidebar() {
             </a>
             <nav className="navigation">
             <Link className="nav-link " to="/"><i className=" icon"></i>Главная</Link>
-            <Link className="nav-link " to="/search.html"><i className=" icon"></i>Категории</Link>
+            <Link className="nav-link " to="/search"><i className=" icon"></i>Категории</Link>
             </nav>
 
         </aside>

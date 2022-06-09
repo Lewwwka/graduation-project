@@ -23,7 +23,7 @@ const Main = () => {
                     {recomend.map(item => (
                         <div className="section__block" key={item.id} >
                             <h2 className="section__nameOfAlbum" >{item.name}</h2>
-                            <Link to={"playlist.html" + "#" + item.href}  className="section__photo">
+                            <Link to={"playlist#" + item.href}  className="section__photo">
                                 <img className="photo" src={item.images[0].url} alt="" />
                             </Link>
                         </div>

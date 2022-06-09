@@ -23,8 +23,8 @@ const CategoriesInSearch = () => {
                     {categoty.map(item => (
                         <div className="section__block" key={item.id} >
                             <h2 className="section__nameOfAlbum" >{item.name}</h2>
-                            <Link to= {"category.html" + "#" + item.href}  className="section__photo">
-                                <img className="photo" src={item.icons[0].url}alt=""/>
+                            <Link to= {"category#" + item.href}  className="section__photo">
+                                <img className="photo" src={item.icons[0].url} alt=""/>
                             </Link>
                         </div>
                     ))}

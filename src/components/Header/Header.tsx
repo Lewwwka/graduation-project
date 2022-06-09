@@ -20,7 +20,7 @@ const Header = () => {
     return (
         <header className="header">
             <div className="header__right">
-                <a href='' className="header__link login">
+                <a href='/' className="header__link login">
                     <img className="header__image" src={photo} alt='' />
                     <h3 className="header__username">{user.display_name}</h3>
                 </a>

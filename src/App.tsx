@@ -8,11 +8,11 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/callback" element={<Home />} />
-      <Route path="/playlist.html" element={<AboutPlaylist />} />
-      <Route path="/search.html" element={<Categories />} />
-      <Route path="/search.html/category.html" element={<AboutCategory />} />
-      <Route path="/search.html/category.html/playlist.html" element={<AboutPlaylist />} />
+      <Route path="callback" element={<Home />} />
+      <Route path="playlist" element={<AboutPlaylist />} />
+      <Route path="search" element={<Categories />} />
+      <Route path="search/category" element={<AboutCategory />} />
+      <Route path="search/category/playlist" element={<AboutPlaylist />} />
     </Routes>
   );
 }
