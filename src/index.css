@@ -90,6 +90,7 @@
   }
   
   .main {
+    height: 100%;
     margin-left: 240px;
     margin-top: 40px;
     background-color: #121212;
@@ -180,6 +181,10 @@
     padding-left: 10px;
   }
   
+  .playlist {
+    height: auto;
+  }
+
   .main__playlist {
     display: flex;
     align-items: center;
@@ -219,12 +224,8 @@
   .table__head {
     padding-bottom: 5px;
     border-bottom: 1px solid gray;
+    padding: 5px;
     text-align: start;
-  }
-  
-  .table__number {
-    text-align: center;
-    font-size: 15px;
   }
   
   .table__item {

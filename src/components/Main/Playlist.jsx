@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react';
-import { getPlaylist, formatDuration } from "../../api/playlist"
-
+import { getPlaylist, formatDuration } from "../../api/api"
 
 const Playlist = () => {
-    let [playlistInfo, setPlaylistInfo] = useState<any>([]);
-    let [playlist, setPlaylist] = useState<any[]>([]);
-    let [photo, setPhoto] = useState<any>([]);
+    let [playlistInfo, setPlaylistInfo] = useState([]);
+    let [playlist, setPlaylist] = useState([]);
+    let [photo, setPhoto] = useState("");
 
     useEffect(() => {
         const getInfoAboutPlaylist = async () => {
@@ -21,7 +20,7 @@ const Playlist = () => {
     }, []);
 
     return (
-        <main className="main">
+        <main className="main playlist">
             <div className="main__playlist">
                 <img className="playlist__image" src={photo} alt=""/>
                 <div className="playlist__content">
@@ -34,15 +33,13 @@ const Playlist = () => {
                 <table className="main__table">
                 <tbody>
                     <tr className="table__row">
-                        <th className="table__head">#</th>
                         <th className="table__head">Название</th>
                         <th className="table__head">Альбом</th>
                         <th className="table__head">Дата добавления</th>
                         <th className="table__head">Длительность</th>
                     </tr>
-                    {playlist.map((item, index) => (
-                        <tr className="table__items" key={index}>
-                            <td className="table__item table__number">{index + 1}</td>
+                    {playlist.map((item) => (
+                        <tr className="table__items" key={item.track.id}>
                             <td className="table__item">
                                 <div className="table__content">
                                     <div className="table__text">

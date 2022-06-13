@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
-import {getRecomend} from "../../api/recommendations"
-import { Link } from "react-router-dom";
+import {getRecomend} from "../../api/api"
+import { Link , Routes, Route} from "react-router-dom";
+import Playlist from './Playlist';
 
 const Main = () => {
 
-    let [recomend, setRecomend] = useState<any[]>([]);
- 
+    let [recomend, setRecomend] = useState([]);
+
     useEffect(() => {
         const getRecomendations = async () => {
             let result = await getRecomend();
@@ -16,7 +17,11 @@ const Main = () => {
     }, []);
 
     return (
-        <main className="main" style={{ height: "100%" }}>
+        <div className="app">
+        <Routes>
+            <Route path="/playlist/*" element={<Playlist />} />
+        </Routes>
+        <main className="main">
             <h1 className="section__head recommendation">Рекомендации</h1>
             <section className="section last__section">
                 <div className="section__blocks">
@@ -31,6 +36,7 @@ const Main = () => {
                 </div>
             </section>
         </main>
+        </div>
     );
 }
 
