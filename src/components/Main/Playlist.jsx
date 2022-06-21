@@ -1,23 +1,32 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect,useCallback } from 'react';
 import { getPlaylist, formatDuration } from "../../api/api"
 
 const Playlist = () => {
-    let [playlistInfo, setPlaylistInfo] = useState([]);
-    let [playlist, setPlaylist] = useState([]);
-    let [photo, setPhoto] = useState("");
 
-    useEffect(() => {
-        const getInfoAboutPlaylist = async () => {
-            let result = await getPlaylist();
-            let info = result;
-            setPlaylistInfo(info);
-            let photo = result.images[0].url;
-            setPhoto(photo);
-            let tracks = result.tracks.items;
-            setPlaylist(tracks);
-        }
-        getInfoAboutPlaylist();
-    }, []);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const [playlistInfo, setPlaylistInfo] = useState([]);
+    const [playlist, setPlaylist] = useState([]);
+    const [photo, setPhoto] = useState("");
+
+    const fetchData = useCallback(() => {
+        setLoading(true);
+        getPlaylist()
+          .then((fetchedData) => {
+            let fdata = fetchedData;
+            setPlaylistInfo(fdata);
+            let fdata2 = fetchedData.images[0].url;
+            setPhoto(fdata2);
+            let fdata3 = fetchedData.tracks.items;
+            setPlaylist(fdata3);
+          })
+          .catch((err) => setError(err))
+          .finally(() => setLoading(false));
+      }, []);
+    
+      useEffect(() => {
+        fetchData();
+      }, [fetchData]);
 
     return (
         <main className="main playlist">

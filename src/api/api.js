@@ -10,43 +10,45 @@ import { getToken } from "./token";
     return min + ":" + (sec < 10 ? "0" + sec : sec);
   }
 
-export async function fetchF(url){ 
-    const res = await fetch(url, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + (await getToken()),
-      },
-    })
-      if (!res.ok) {
-        alert("Ошибка загрузки данных");
-        throw new Error(res.statusText);
-      } else {
-        const data = await res.json();
-      return data;
-      };
+async function FetchF(url) {
+  const res = await fetch(url, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + (await getToken()),
+    },
+  })
+  .catch((err) => err);
+
+  if (!res.ok) {
+    alert("Ошибка загрузки данных");
+    throw new Error(res.statusText);
+  } else {
+    const data = await res.json();
+    return data;
+  };
 };
 
 //Категории
 export const getCategotyInSearch = async () => {
-  return fetchF("https://api.spotify.com/v1/browse/categories");
+  return FetchF("https://api.spotify.com/v1/browse/categories");
 };
 
 //Рекоменации
 export const getRecomend = async () => {
-  return fetchF("https://api.spotify.com/v1/browse/featured-playlists");
+  return FetchF("https://api.spotify.com/v1/browse/featured-playlists");
 };
 
 //Выбранный плейлист в рекомендациях
 export const getPlaylist = async () => {
-  return fetchF(window.location.hash.slice(1));
+  return FetchF(window.location.hash.slice(1));
 };
 
 //Выбранная категория
 export const getCategoty = async () => {
-    return fetchF(window.location.hash.slice(1));
+    return FetchF(window.location.hash.slice(1));
   };
 
 //Выбранный плейлист в категории
 export const getPlaylistInCategory = async () => {
-    return fetchF(window.location.hash.slice(1) + "/playlists");
+    return FetchF(window.location.hash.slice(1) + "/playlists");
   };

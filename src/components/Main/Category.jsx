@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { getCategoty, getPlaylistInCategory } from "../../api/api"
 import { Link, Routes, Route } from "react-router-dom";
 import Playlist from './Playlist';
@@ -6,26 +6,32 @@ import Playlist from './Playlist';
 
 const Category = () => {
 
-    let [nameOfCategory, setNameOfCategory] = useState("");
-    let [playlists, setPlaylists] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const [nameOfCategory, setNameOfCategory] = useState("");
+    const [playlists, setPlaylists] = useState([]);
 
-    useEffect(() => {
-        const getNameOfCategory = async () => {
-            let result = await getCategoty();
-            let data = result.name;
-            setNameOfCategory(data);
-        }
-        getNameOfCategory();
-    }, []);
-
-    useEffect(() => {
-        const getPlaylists = async () => {
-            let result = await getPlaylistInCategory();
-            let data = result.playlists.items;
-            setPlaylists(data);
-        }
-        getPlaylists();
-    }, []);
+    const fetchData = useCallback(() => {
+        setLoading(true);
+        getCategoty()
+          .then((fetchedData) => {
+            let fdata = fetchedData.name;
+            setNameOfCategory(fdata);
+          })
+          .catch((err) => setError(err))
+          .finally(() => setLoading(false));
+        getPlaylistInCategory()
+          .then((fetchedData) => {
+            let fdata = fetchedData.playlists.items;
+            setPlaylists(fdata);
+          })
+          .catch((err) => setError(err))
+          .finally(() => setLoading(false));
+      }, []);
+    
+      useEffect(() => {
+        fetchData();
+      }, [fetchData]);
 
     return (
         <div className="app">

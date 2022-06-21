@@ -1,21 +1,29 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect,useCallback} from 'react';
 import {getCategotyInSearch} from "../../api/api"
 import { Link , Routes, Route} from "react-router-dom";
 import Category from './Category';
 
 const CategoriesInSearch = () => {
 
-    let [categoty, setCategoties] = useState([]);
- 
-    useEffect(() => {
-        const getCategoties = async () => {
-            let result = await getCategotyInSearch();
-            let data = result.categories.items;
-            setCategoties(data);
-        }
-        getCategoties();
-    }, []);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const [categoty, setCategoties] = useState([]);
 
+    const fetchData = useCallback(() => {
+        setLoading(true);
+        getCategotyInSearch()
+          .then((fetchedData) => {
+            let fdata = fetchedData.categories.items;
+            setCategoties(fdata);
+          })
+          .catch((err) => setError(err))
+          .finally(() => setLoading(false));
+      }, []);
+    
+      useEffect(() => {
+        fetchData();
+      }, [fetchData]);
+      
     return (
         <div className="app">
             <Routes>

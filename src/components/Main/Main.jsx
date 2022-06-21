@@ -1,20 +1,28 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback} from 'react';
 import {getRecomend} from "../../api/api"
 import { Link , Routes, Route} from "react-router-dom";
 import Playlist from './Playlist';
 
 const Main = () => {
 
-    let [recomend, setRecomend] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const [recomend, setRecomend] = useState([]);
 
-    useEffect(() => {
-        const getRecomendations = async () => {
-            let result = await getRecomend();
-            let data = result.playlists.items;
-            setRecomend(data);
-        }
-        getRecomendations();
-    }, []);
+    const fetchData = useCallback(() => {
+        setLoading(true);
+        getRecomend()
+          .then((fetchedData) => {
+            let fdata = fetchedData.playlists.items;
+            setRecomend(fdata);
+          })
+          .catch((err) => setError(err))
+          .finally(() => setLoading(false));
+      }, []);
+    
+      useEffect(() => {
+        fetchData();
+      }, [fetchData]);
 
     return (
         <div className="app">
